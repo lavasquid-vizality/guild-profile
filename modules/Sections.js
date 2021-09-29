@@ -37,7 +37,7 @@ const SERVER_INFO = ({ guild, name }) => {
     <Info title={'System Channel'} description={`<#${guild.systemChannelId}>`} onClick={close} />,
     // <Section title={'Public Updates Channel'} description={`<#${guild.publicUpdatesChannelId}>`} onClick={close} />,
     <Info title={'AFK Channel'} description={`<#${guild.afkChannelId}>`} onClick={close} />,
-    <Info title={'Commands'} description={Object.keys(guild.applicationCommandCounts).length ? guild.applicationCommandCounts : null} />,
+    <Info title={'Commands'} description={guild.applicationCommandCounts} />,
     <Info title={'Premium Subscriber Count'} description={`${guild.premiumSubscriberCount}`} />,
     <Info title={'Default Message Notification'} description={`${guild.defaultMessageNotifications}`} />,
     <Info title={'Verification Level'} description={`${guild.verificationLevel}`} />,
@@ -49,7 +49,7 @@ const SERVER_INFO = ({ guild, name }) => {
       case 'Server Owner':
         return true;
       case 'Commands':
-        return Object.values(section.props.description).reduce((total, current) => total + current, 0);
+        return Object.values(section.props.description).reduce((total, value) => total + value, 0);
       default:
         return section.props.description && !section.props.description.includes('null');
     }

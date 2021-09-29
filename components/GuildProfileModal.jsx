@@ -51,29 +51,29 @@ export default memo(({ guild }) => {
 
   return <Modal size={Modal.Sizes.MEDIUM} onClick={() => {
     if (!isEmptyObject(OpenPopouts)) Object.values(OpenPopouts).forEach(setShouldShow => setShouldShow(false));
-  }}>{
-      <>
-        <div className={topSection}>
-          <header>
-            <UserBanner bannerType={1} user={guildHeader} />
-            <div className={header}>
-              {guild.icon
-                ? <AnimatedAvatar className={avatar} src={guild.getIconURL(120, true)} size={Sizes.SIZE_120} animate={true} />
-                : <GuildIconWrapper className={avatar} style={{ backgroundClip: 'unset', borderColor: accentColor }} guild={guild} size={GuildIconWrapper.Sizes.XLARGE} animate={true} />}
-              <Icons premiumTier={guild.premiumTier} guildFeatures={guild.features} />
-            </div>
-            <div className={`${nameTagNoCustomStatus} ${nameTag}`} style={{ marginBottom: '5px' }}><span className={`${username} ${headerUsername}`}>{
-              <GuildInfo title={<GuildName guild={guild} />}>
-                <FluxMemberCountStoreData guildId={guild.id} />
-                <FluxMemberCountStoreDiv guildId={guild.id} />
-              </GuildInfo>
-            }</span></div>
-          </header>
-          <GuildProfileTabBar guild={guild} section={section} setSection={setSection} />
-        </div>
-        <div className={body}>
-          <Section selectedSection={section} guild={guild} />
-        </div>
-      </>
-    }</Modal>;
+  }}>
+    <>
+      <div className={topSection}>
+        <header>
+          <UserBanner bannerType={1} user={guildHeader} />
+          <div className={header}>
+            {guild.icon
+              ? <AnimatedAvatar className={avatar} src={guild.getIconURL(120, true)} size={Sizes.SIZE_120} animate={true} />
+              : <GuildIconWrapper className={avatar} style={{ backgroundClip: 'unset', borderColor: accentColor }} guild={guild} size={GuildIconWrapper.Sizes.XLARGE} animate={true} />}
+            <Icons premiumTier={guild.premiumTier} guildFeatures={guild.features} />
+          </div>
+          <div className={`${nameTagNoCustomStatus} ${nameTag}`} style={{ marginBottom: '5px' }}><span className={`${username} ${headerUsername}`}>
+            <GuildInfo title={<GuildName guild={guild} />}>
+              <FluxMemberCountStoreData guildId={guild.id} />
+              <FluxMemberCountStoreDiv guildId={guild.id} />
+            </GuildInfo>
+          </span></div>
+        </header>
+        <GuildProfileTabBar guild={guild} section={section} setSection={setSection} />
+      </div>
+      <div className={body}>
+        <Section selectedSection={section} guild={guild} />
+      </div>
+    </>
+  </Modal>;
 });
