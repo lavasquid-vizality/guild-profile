@@ -8,7 +8,7 @@ const Mention = getModule(m => m.displayName === 'Mention');
 const { openContextMenu } = getModule(m => m.openContextMenu);
 const GuildChannelUserContextMenu = getModule(m => m.displayName === 'GuildChannelUserContextMenu');
 
-const { getChannels } = getModule(m => m._dispatchToken && m.getChannels);
+const { getChannels } = getModule(m => m.getChannels);
 
 export const OpenPopouts = {};
 

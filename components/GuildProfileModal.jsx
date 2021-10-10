@@ -14,7 +14,7 @@ import { OpenPopouts } from './MentionPopout';
 const UserBanner = getModule(m => m.displayName === 'UserBanner');
 const { AnimatedAvatar, Sizes } = getModule(m => m.AnimatedAvatar);
 const GuildIconWrapper = getModule(m => m.displayName === 'GuildIconWrapper');
-const { Info: GuildInfo, GuildName, Data } = getModule(m => m.Info?.displayName === 'InviteInfo');
+const { Info: GuildInfo, GuildName, Data } = getModule(m => m.Info?.displayName === 'InviteButton.Info');
 
 const { count } = getModule('count', 'status');
 const { topSection, body } = getModule('topSection');

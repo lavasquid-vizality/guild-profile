@@ -106,5 +106,5 @@ export default ({ title, description, channelId, onClick }) => {
 
   const style = title === 'Current User' ? { marginLeft: 'auto', marginRight: '20px', textAlign: '-webkit-center' } : { paddingTop: '10px', paddingRight: '20px', paddingBottom: '5px' };
 
-  return (<div style={style}><Header size={Header.Sizes.SIZE_12} muted={true} style={{ paddingBottom: '5px', fontVariantLigatures: 'none' }}>{title}</Header><Text style={{ width: 'fit-content', whiteSpace: 'pre-wrap' }} onClick={onClick}>{content}</Text></div>);
+  return <div style={style}><Header size={Header.Sizes.SIZE_12} muted={true} style={{ paddingBottom: '5px', fontVariantLigatures: 'none' }}>{title}</Header><Text style={{ width: 'fit-content', whiteSpace: 'pre-wrap' }} onClick={onClick}>{content}</Text></div>;
 };

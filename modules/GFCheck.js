@@ -4,7 +4,7 @@ import { Constants } from '@vizality/discord/constants';
 import { GuildFeatures } from '../constants';
 
 export default function () {
-  const CONSTGFKeys = Object.keys(Constants.GuildFeatures);
+  const CONSTGFKeys = Object.values(Constants.GuildFeatures);
   const GFKeys = Object.keys(GuildFeatures);
 
   const GFAdd = CONSTGFKeys.filter(GuildFeature => !GuildFeatures.hasOwnProperty(GuildFeature));

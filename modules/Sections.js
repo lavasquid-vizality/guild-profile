@@ -11,13 +11,13 @@ const SearchBar = getModule(m => m.displayName === 'SearchBar');
 const FriendRow = getModule(m => m.displayName === 'FriendRow');
 const BlockedRow = getModule(m => m.displayName === 'BlockedRow');
 
-const { getChannels } = getModule(m => m._dispatchToken && m.getChannels);
+const { getChannels } = getModule(m => m.getChannels);
 const Timestamp = getModule(m => m.prototype?.toDate && m.prototype?.month);
 const { extractTimestamp } = getModule(m => m.extractTimestamp);
 const { parse } = getModule('parse', 'defaultRules');
-const { getRelationships } = getModule(m => m._dispatchToken && m.getRelationships);
-const { isMember } = getModule(m => m._dispatchToken && m.isMember);
-const { getStatus } = getModule(m => m._dispatchToken && m.getStatus);
+const { getRelationships } = getModule(m => m.getRelationships);
+const { isMember } = getModule(m => m.isMember);
+const { getStatus } = getModule(m => m.getStatus);
 
 const { infoScroller } = getModule('infoScroller');
 const { listScroller } = getModule('listScroller');
