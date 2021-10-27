@@ -86,7 +86,6 @@ export const GuildFeatures = Object.freeze({
   MEMBER_VERIFICATION_GATE_ENABLED: _Icon.bind(null, m => m.displayName === 'Blocked'),
   PREVIEW_ENABLED: _VZIcon.bind(null, 'ProjectorScreen'),
   MONETIZATION_ENABLED: _Icon.bind(null, m => m.displayName === 'StoreTag'),
-  TICKETED_EVENTS_ENABLED: _Icon.bind(null, m => m.displayName === 'Ticket'),
   ROLE_SUBSCRIPTIONS_ENABLED: OtherIcon.bind(null, 'RoleSubscriptions'),
   THREE_DAY_THREAD_ARCHIVE: OtherIcon.bind(null, 3),
   SEVEN_DAY_THREAD_ARCHIVE: OtherIcon.bind(null, 7),

@@ -7,7 +7,7 @@ import { findInReactTree } from '@vizality/util/react';
 import Info from '../components/Info';
 
 const { AdvancedScrollerThin } = getModule(m => m.AdvancedScrollerThin);
-const SearchBar = getModule(m => m.displayName === 'SearchBar');
+const SearchBar = getModule(m => m.displayName === 'SearchBar' && String(m).includes('onChange'));
 const FriendRow = getModule(m => m.displayName === 'FriendRow');
 const BlockedRow = getModule(m => m.displayName === 'BlockedRow');
 

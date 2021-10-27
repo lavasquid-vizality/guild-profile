@@ -7,7 +7,7 @@ import { toTitleCase } from '@vizality/util/string';
 import MentionPopout from '../components/MentionPopout';
 
 const MaskedLink = getModule(m => m.displayName === 'MaskedLink');
-const Header = getModule(m => m.displayName === 'Header');
+const Header = getModule(m => m.displayName === 'Header' && m.Sizes);
 const Text = getModule(m => m.displayName === 'Text');
 
 const { parse } = getModule('parse', 'defaultRules');
