@@ -17,7 +17,7 @@ const { extractTimestamp } = getModule(m => m.extractTimestamp);
 const { parse } = getModule('parse', 'defaultRules');
 const { getRelationships } = getModule(m => m.getRelationships);
 const { isMember } = getModule(m => m.isMember);
-const { getStatus } = getModule(m => m.getStatus);
+const { getStatus } = getModule(m => m.getStatus && m.getState);
 
 const { infoScroller } = getModule('infoScroller');
 const { listScroller } = getModule('listScroller');

@@ -23,6 +23,7 @@ const handleGuildMemberListUpdate = ({ id, guildId, groups, memberCount }) => {
 class MemberCountStore extends Flux.Store {
   constructor () {
     super(FluxDispatcher, { [Constants.ActionTypes.GUILD_MEMBER_LIST_UPDATE]: handleGuildMemberListUpdate });
+    this._destroyed = true;
     this._memberCounts = new Map();
   }
 
