@@ -21,7 +21,7 @@ export default memo(({ premiumTier, guildFeatures }) => {
   const Icons = [];
 
   if (debug) guildFeatures = new Set(Object.values(Constants.GuildFeatures));
-  if (premiumTier) Icons.push(<Icon icon={getModule(m => m.displayName === `PremiumGuildTier${premiumTier}`)} tooltip={`Server Boost ${Messages[`PREMIUM_GUILD_TIER_${premiumTier}`]}`} color={'white'} />);
+  if (premiumTier) Icons.push(<Icon icon={getModule(m => m.displayName === `BoostedGuildTier${premiumTier}`)} tooltip={`Server Boost ${Messages[`PREMIUM_GUILD_TIER_${premiumTier}`]}`} color={'white'} />);
 
   for (const guildFeature of Object.values(Constants.GuildFeatures)) {
     if (guildFeatures.has(guildFeature)) {
