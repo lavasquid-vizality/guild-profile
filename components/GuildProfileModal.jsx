@@ -26,7 +26,7 @@ const FluxMemberCountStoreData = Flux.connectStores([ MemberCountStore ], ({ gui
 })(Data);
 const FluxMemberCountStoreDiv = Flux.connectStores([ MemberCountStore ], ({ guildId }) => {
   const _LEFT = MemberCountStore._getLeft(guildId);
-  return _LEFT ? { color: Constants.HEXColors.STATUS_RED, children: `Online Count May Not Be Accurate! ${_LEFT} ${_LEFT === 1 ? 'member' : 'members'} not considered.` } : null;
+  return _LEFT ? { color: Constants.Colors.STATUS_RED, children: `Online Count May Not Be Accurate! ${_LEFT} ${_LEFT === 1 ? 'member' : 'members'} not considered.` } : null;
 })(({ color, children }) => children ? <div className={count} style={{ color }}>{children}</div> : null);
 
 export default memo(({ guild }) => {

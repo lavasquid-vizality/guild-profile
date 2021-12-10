@@ -1,5 +1,5 @@
 import { Flux, FluxDispatcher } from '@vizality/webpack';
-import { Constants } from '@vizality/discord/constants';
+import { ActionTypes } from '@vizality/discord/constants';
 
 const handleGuildMemberListUpdate = ({ id, guildId, groups, memberCount }) => {
   if (this.default._destroyed) return;
@@ -22,7 +22,7 @@ const handleGuildMemberListUpdate = ({ id, guildId, groups, memberCount }) => {
 
 class MemberCountStore extends Flux.Store {
   constructor () {
-    super(FluxDispatcher, { [Constants.ActionTypes.GUILD_MEMBER_LIST_UPDATE]: handleGuildMemberListUpdate });
+    super(FluxDispatcher, { [ActionTypes.GUILD_MEMBER_LIST_UPDATE]: handleGuildMemberListUpdate });
     this._destroyed = true;
     this._memberCounts = new Map();
   }

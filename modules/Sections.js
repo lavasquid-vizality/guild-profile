@@ -1,5 +1,5 @@
 import React, { memo, createElement, useState } from 'react';
-const { user } = require('@vizality/discord');
+const { user, constants: { Constants } } = require('@vizality/discord');
 import { close } from '@vizality/modal';
 import { getModule } from '@vizality/webpack';
 import { findInReactTree } from '@vizality/util/react';
@@ -90,8 +90,8 @@ const RELATIONS = (guild, type) => {
 
   for (const [ userId, relation ] of Object.entries(getRelationships())) {
     if (isMember(guild.id, userId)) {
-      if (relation === 1) Type.Friends.push(<div onClickCapture={rowClick}><FriendRow user={user.getUser(userId)} status={getStatus(userId)} activities={[]} isFocused={true} /></div>);
-      else if (relation === 2) Type.Blocked.push(<div onClickCapture={rowClick}><BlockedRow user={user.getUser(userId)} status={getStatus(userId)} isFocused={true} /></div>);
+      if (relation === Constants.RelationshipTypes.FRIEND) Type.Friends.push(<div onClickCapture={rowClick}><FriendRow user={user.getUser(userId)} status={getStatus(userId)} activities={[]} isFocused={true} /></div>);
+      else if (relation === Constants.RelationshipTypes.BLOCKED) Type.Blocked.push(<div onClickCapture={rowClick}><BlockedRow user={user.getUser(userId)} status={getStatus(userId)} isFocused={true} /></div>);
     }
   }
 

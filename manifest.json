@@ -1,7 +1,7 @@
 {
   "name": "Guild Profile",
   "description": "Shows a guild profile modal on guild context menu",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "author": "LavaSquid",
   "license": "MIT"
 }
