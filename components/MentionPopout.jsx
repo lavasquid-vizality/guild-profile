@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import { user } from '@vizality/discord';
 import { getModule } from '@vizality/webpack';
 
@@ -12,7 +12,7 @@ const { getChannels } = getModule(m => m.getChannels);
 
 export const OpenPopouts = {};
 
-export default ({ userId, guild }) => {
+export default memo(({ userId, guild }) => {
   const [ shouldShow, setShouldShow ] = useState(false);
 
   const User = userId ? user.getUser(userId) : user.getCurrentUser();
@@ -26,4 +26,4 @@ export default ({ userId, guild }) => {
       if (User) return openContextMenu(args, args => <GuildChannelUserContextMenu {...args} guildId={guild.id} channelId={channelId} user={User} />);
     }} channelId={channelId} userId={userId}>{mention}</Mention>;
   }}</Popout>;
-};
+});

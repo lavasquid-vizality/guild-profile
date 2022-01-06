@@ -11,7 +11,7 @@ import GFCheck from './modules/GFCheck';
 
 const { MenuGroup, MenuItem } = getModule(m => m.MenuItem);
 
-export default class extends Plugin {
+export default class GuildProfile extends Plugin {
   start () {
     MemberCountStore.initialize();
     GFCheck.call(this);

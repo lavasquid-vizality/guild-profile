@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Constants } from '@vizality/discord/constants';
 import { Messages } from '@vizality/i18n';
 import { getModule } from '@vizality/webpack';
@@ -12,7 +12,7 @@ const Text = getModule(m => m.displayName === 'Text');
 
 const { parse } = getModule('parse', 'defaultRules');
 
-export default ({ title, description, channelId, onClick }) => {
+export default memo(({ title, description, channelId, onClick }) => {
   let content = '';
 
   switch (title) {
@@ -107,4 +107,4 @@ export default ({ title, description, channelId, onClick }) => {
   const style = title === 'Current User' ? { marginLeft: 'auto', marginRight: '20px', textAlign: '-webkit-center' } : { paddingTop: '10px', paddingRight: '20px', paddingBottom: '5px' };
 
   return <div style={style}><Header size={Header.Sizes.SIZE_12} muted={true} style={{ paddingBottom: '5px', fontVariantLigatures: 'none' }}>{title}</Header><Text style={{ width: 'fit-content', whiteSpace: 'pre-wrap' }} onClick={onClick}>{content}</Text></div>;
-};
+});
