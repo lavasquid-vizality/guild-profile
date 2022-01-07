@@ -2,7 +2,7 @@ import React, { memo, useState, useEffect } from 'react';
 import { getModule } from '@vizality/webpack';
 import { toTitleCase } from '@vizality/util/string';
 
-import Info from './Info';
+import GuildInfo from './GuildInfo';
 
 import { AllTabs } from '../modules/Sections';
 
@@ -30,6 +30,6 @@ export default memo(({ guild, section, setSection }) => {
 
   return <div className={tabBarContainer}><TabBar className={tabBar} type={TabBar.Types.TOP} selectedItem={section} onItemSelect={setSection}>
     {tabs}
-    <Info title={'Current User'} description={{ guild }} />
+    <GuildInfo title={'Current User'} description={{ guild }} />
   </TabBar></div>;
 });

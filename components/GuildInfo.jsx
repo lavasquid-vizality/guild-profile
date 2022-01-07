@@ -4,7 +4,7 @@ import { Messages } from '@vizality/i18n';
 import { getModule } from '@vizality/webpack';
 import { toTitleCase } from '@vizality/util/string';
 
-import MentionPopout from '../components/MentionPopout';
+import MentionPopout from './MentionPopout';
 
 const MaskedLink = getModule(m => m.displayName === 'MaskedLink');
 const Header = getModule(m => m.displayName === 'Header' && m.Sizes);

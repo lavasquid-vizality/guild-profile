@@ -4,7 +4,7 @@ import { close } from '@vizality/modal';
 import { getModule } from '@vizality/webpack';
 import { findInReactTree } from '@vizality/util/react';
 
-import Info from '../components/Info';
+import GuildInfo from '../components/GuildInfo';
 
 const { AdvancedScrollerThin } = getModule(m => m.AdvancedScrollerThin);
 const SearchBar = getModule(m => m.displayName === 'SearchBar' && String(m).includes('onChange'));
@@ -27,23 +27,23 @@ const SERVER_INFO = ({ guild, name }) => {
   const channelId = getChannels(guild.id).SELECTABLE[0].channel.id;
 
   const Server_Info = [
-    <Info title={'Server Owner'} description={{ guild, userId: guild.ownerId }} channelId={channelId} />,
-    <Info title={'Server Description'} description={guild.description} />,
-    <Info title={'Vanity URL'} description={guild.vanityURLCode} />,
-    <Info title={'AFK Timeout'} description={Timestamp()._locale.relativeTime(guild.afkTimeout, true, 'ss', true)} />,
-    <Info title={'Server Created On'} description={Timestamp(extractTimestamp(guild.id)).format('LLL')} />,
-    <Info title={'Server Joined On'} description={Timestamp(guild.joinedAt).format('LLL')} />,
-    <Info title={'Rules Channel'} description={`<#${guild.rulesChannelId}>`} onClick={close} />,
-    <Info title={'System Channel'} description={`<#${guild.systemChannelId}>`} onClick={close} />,
+    <GuildInfo title={'Server Owner'} description={{ guild, userId: guild.ownerId }} channelId={channelId} />,
+    <GuildInfo title={'Server Description'} description={guild.description} />,
+    <GuildInfo title={'Vanity URL'} description={guild.vanityURLCode} />,
+    <GuildInfo title={'AFK Timeout'} description={Timestamp()._locale.relativeTime(guild.afkTimeout, true, 'ss', true)} />,
+    <GuildInfo title={'Server Created On'} description={Timestamp(extractTimestamp(guild.id)).format('LLL')} />,
+    <GuildInfo title={'Server Joined On'} description={Timestamp(guild.joinedAt).format('LLL')} />,
+    <GuildInfo title={'Rules Channel'} description={`<#${guild.rulesChannelId}>`} onClick={close} />,
+    <GuildInfo title={'System Channel'} description={`<#${guild.systemChannelId}>`} onClick={close} />,
     // <Section title={'Public Updates Channel'} description={`<#${guild.publicUpdatesChannelId}>`} onClick={close} />,
-    <Info title={'AFK Channel'} description={`<#${guild.afkChannelId}>`} onClick={close} />,
-    <Info title={'Commands'} description={guild.applicationCommandCounts} />,
-    <Info title={'Premium Subscriber Count'} description={`${guild.premiumSubscriberCount}`} />,
-    <Info title={'Default Message Notification'} description={`${guild.defaultMessageNotifications}`} />,
-    <Info title={'Verification Level'} description={`${guild.verificationLevel}`} />,
-    <Info title={'Explicit Content Filter'} description={`${guild.explicitContentFilter}`} />,
-    <Info title={'MFA Level'} description={`${guild.mfaLevel}`} />,
-    <Info title={'NSFW Level'} description={`${guild.nsfwLevel}`} />
+    <GuildInfo title={'AFK Channel'} description={`<#${guild.afkChannelId}>`} onClick={close} />,
+    <GuildInfo title={'Commands'} description={guild.applicationCommandCounts} />,
+    <GuildInfo title={'Premium Subscriber Count'} description={`${guild.premiumSubscriberCount}`} />,
+    <GuildInfo title={'Default Message Notification'} description={`${guild.defaultMessageNotifications}`} />,
+    <GuildInfo title={'Verification Level'} description={`${guild.verificationLevel}`} />,
+    <GuildInfo title={'Explicit Content Filter'} description={`${guild.explicitContentFilter}`} />,
+    <GuildInfo title={'MFA Level'} description={`${guild.mfaLevel}`} />,
+    <GuildInfo title={'NSFW Level'} description={`${guild.nsfwLevel}`} />
   ].filter(section => {
     switch (section.props.title) {
       case 'Server Owner':
