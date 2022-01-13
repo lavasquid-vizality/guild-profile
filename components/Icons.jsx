@@ -4,11 +4,10 @@ import { Constants } from '@vizality/discord/constants';
 import { getModule } from '@vizality/webpack';
 import { toTitleCase } from '@vizality/util/string';
 
-import { GuildFeatures } from '../constants';
+import { GuildFeatures, Class } from '../constants';
 
 const { Icon } = getModule(m => m.Icon?.displayName === 'Icon');
 
-const { headerTop, badgeList } = getModule('header', 'avatar', 'nameTag');
 const { container } = getModule('container', 'profileBadge');
 
 const debug = false;
@@ -18,6 +17,8 @@ const nameReplace = {
 };
 
 export default memo(({ premiumTier, guildFeatures }) => {
+  const { headerTop, badgeList } = getModule('header', 'avatar', 'nameTag') ?? Class.header;
+
   const Icons = [];
 
   if (debug) guildFeatures = new Set(Object.values(Constants.GuildFeatures));

@@ -1,15 +1,16 @@
 import React from 'react';
 import { Plugin } from '@vizality/entities';
-import { patch } from '@vizality/patcher';
-import { open } from '@vizality/modal';
 import { getModule } from '@vizality/webpack';
 
 import GuildProfileModal from './components/GuildProfileModal';
 
 import MemberCountStore from './stores/memberCount';
 import GFCheck from './modules/GFCheck';
+import patchContextMenuLazy from './modules/patchContextMenuLazy';
 
 const { MenuGroup, MenuItem } = getModule(m => m.MenuItem);
+
+const { openModalLazy } = getModule(m => m.openModalLazy);
 
 export default class GuildProfile extends Plugin {
   start () {
@@ -21,10 +22,10 @@ export default class GuildProfile extends Plugin {
   }
 
   patch () {
-    patch(getModule(m => m.default?.displayName === 'GuildContextMenu'), 'default', (args, res) => {
+    patchContextMenuLazy(getModule.bind(this, m => m.default?.displayName === 'GuildContextMenu'), 'default', (args, res) => {
       const { guild } = args[0];
 
-      res.props.children.unshift(<MenuGroup><MenuItem action={() => open(() => <GuildProfileModal guild={guild} />)} id={'guild-profile'} label={'Server Profile'} /></MenuGroup>);
+      res.props.children.unshift(<MenuGroup><MenuItem action={() => openModalLazy(() => ModalArgs => <GuildProfileModal {...ModalArgs} guild={guild} />)} id={'guild-profile'} label={'Server Profile'} /></MenuGroup>);
 
       return res;
     });

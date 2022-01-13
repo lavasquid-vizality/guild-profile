@@ -1,10 +1,11 @@
 import React, { memo, createElement, useState } from 'react';
 const { user, constants: { Constants } } = require('@vizality/discord');
-import { close } from '@vizality/modal';
 import { getModule } from '@vizality/webpack';
 import { findInReactTree } from '@vizality/util/react';
 
 import GuildInfo from '../components/GuildInfo';
+
+import { Class } from '../constants';
 
 const { AdvancedScrollerThin } = getModule(m => m.AdvancedScrollerThin);
 const SearchBar = getModule(m => m.displayName === 'SearchBar' && String(m).includes('onChange'));
@@ -14,20 +15,20 @@ const BlockedRow = getModule(m => m.displayName === 'BlockedRow');
 const { getChannels } = getModule(m => m.getChannels);
 const Timestamp = getModule(m => m.prototype?.toDate && m.prototype?.month);
 const { extractTimestamp } = getModule(m => m.extractTimestamp);
+const { ExperimentTypes, ExperimentStore } = getModule(m => m.ExperimentTypes);
+const { v3 } = getModule(m => m.v3);
 const { parse } = getModule('parse', 'defaultRules');
 const { getRelationships } = getModule(m => m.getRelationships);
 const { isMember } = getModule(m => m.isMember);
 const { getStatus } = getModule(m => m.getStatus && m.getState);
 
-const { infoScroller } = getModule('infoScroller');
-const { listScroller } = getModule('listScroller');
-const { listItemContents } = getModule('listItemContents', 'actions');
+const SERVER_INFO = ({ guild, name, close }) => {
+  const { infoScroller } = getModule('infoScroller') ?? Class.infoScroller;
 
-const SERVER_INFO = ({ guild, name }) => {
   const channelId = getChannels(guild.id).SELECTABLE[0].channel.id;
 
   const Server_Info = [
-    <GuildInfo title={'Server Owner'} description={{ guild, userId: guild.ownerId }} channelId={channelId} />,
+    <GuildInfo title={'Server Owner'} description={{ channelId, userId: guild.ownerId }} channelId={channelId} />,
     <GuildInfo title={'Server Description'} description={guild.description} />,
     <GuildInfo title={'Vanity URL'} description={guild.vanityURLCode} />,
     <GuildInfo title={'AFK Timeout'} description={Timestamp()._locale.relativeTime(guild.afkTimeout, true, 'ss', true)} />,
@@ -59,7 +60,28 @@ const SERVER_INFO = ({ guild, name }) => {
   return <AdvancedScrollerThin className={infoScroller} style={{ display: 'flex', flexWrap: 'wrap' }} fade={true}>{Server_Info}</AdvancedScrollerThin>;
 };
 
+const EXPERIMENTS = ({ guild, name }) => {
+  const { infoScroller } = getModule('infoScroller') ?? Class.infoScroller;
+
+  const guildExperiments = ExperimentStore.getGuildExperiments();
+  const Experiments = [];
+
+  for (const [ key, value ] of Object.entries(ExperimentStore.getRegisteredExperiments())) {
+    if (value.type === ExperimentTypes.GUILD) {
+      const guildExperimentsKey = guildExperiments[v3(key)];
+      if (guildExperimentsKey && guild.id in guildExperimentsKey.overrides) {
+        Experiments.push([ `${value.title} (${key})`, value.description[guildExperimentsKey.overrides[guild.id]] ]);
+      }
+    }
+  }
+  if (name) return [ `${name} (${Experiments.length})`, Experiments.length ];
+
+  return <AdvancedScrollerThin className={infoScroller} fade={true}>{Experiments.map(([ title, description ]) => <GuildInfo title={title} description={description} />)}</AdvancedScrollerThin>;
+};
+
 const ROLES = ({ guild, name }) => {
+  const { infoScroller } = getModule('infoScroller') ?? Class.infoScroller;
+
   const channelId = getChannels(guild.id).SELECTABLE[0].channel.id;
   let Roles = [];
 
@@ -74,15 +96,14 @@ const ROLES = ({ guild, name }) => {
   return <AdvancedScrollerThin className={infoScroller} fade={true}>{[ <SearchBar className={'GP-SearchBar'} size={SearchBar.Sizes.MEDIUM} query={query} onChange={setQuery} onClear={setQuery.bind(null, '')} />, Roles ]}</AdvancedScrollerThin>;
 };
 
-const rowClick = ({ nativeEvent }) => {
-  const paths = [];
+const rowClick = (close, { nativeEvent }) => {
   for (const path of nativeEvent.path) {
-    if (path.ariaLabel === 'Unblock') return close();
-    if (path.className === listItemContents || path.ariaLabel === 'More') paths.push(path);
+    if (path.ariaLabel === 'Message' || path.ariaLabel === 'Unblock') return close();
+    if (path.ariaLabel === 'More') return;
   }
-  if (paths.length === 1) close();
+  return close();
 };
-const RELATIONS = (guild, type) => {
+const RELATIONS = (guild, type, close) => {
   const Type = {
     Friends: [],
     Blocked: []
@@ -90,21 +111,25 @@ const RELATIONS = (guild, type) => {
 
   for (const [ userId, relation ] of Object.entries(getRelationships())) {
     if (isMember(guild.id, userId)) {
-      if (relation === Constants.RelationshipTypes.FRIEND) Type.Friends.push(<div onClickCapture={rowClick}><FriendRow user={user.getUser(userId)} status={getStatus(userId)} activities={[]} isFocused={true} /></div>);
-      else if (relation === Constants.RelationshipTypes.BLOCKED) Type.Blocked.push(<div onClickCapture={rowClick}><BlockedRow user={user.getUser(userId)} status={getStatus(userId)} isFocused={true} /></div>);
+      if (relation === Constants.RelationshipTypes.FRIEND) Type.Friends.push(<div onClickCapture={rowClick.bind(this, close)}><FriendRow user={user.getUser(userId)} status={getStatus(userId)} activities={[]} isFocused={true} /></div>);
+      else if (relation === Constants.RelationshipTypes.BLOCKED) Type.Blocked.push(<div onClickCapture={rowClick.bind(this, close)}><BlockedRow user={user.getUser(userId)} status={getStatus(userId)} isFocused={true} /></div>);
     }
   }
 
   return Type[type];
 };
-const FRIENDS = ({ guild, name }) => {
-  const Friends = RELATIONS(guild, 'Friends');
+const FRIENDS = ({ guild, name, close }) => {
+  const { listScroller } = getModule('listScroller') ?? Class.listScroller;
+
+  const Friends = RELATIONS(guild, 'Friends', close);
   if (name) return [ `${name} (${Friends.length})`, Friends.length ];
 
   return <AdvancedScrollerThin className={listScroller} fade={true}>{Friends}</AdvancedScrollerThin>;
 };
-const BLOCKED = ({ guild, name }) => {
-  const Blocked = RELATIONS(guild, 'Blocked');
+const BLOCKED = ({ guild, name, close }) => {
+  const { listScroller } = getModule('listScroller') ?? Class.listScroller;
+
+  const Blocked = RELATIONS(guild, 'Blocked', close);
   if (name) return [ `${name} (${Blocked.length})`, Blocked.length ];
 
   return <AdvancedScrollerThin className={listScroller} fade={true}>{Blocked}</AdvancedScrollerThin>;
@@ -112,11 +137,12 @@ const BLOCKED = ({ guild, name }) => {
 
 export const AllTabs = {
   SERVER_INFO,
+  EXPERIMENTS,
   ROLES,
   FRIENDS,
   BLOCKED
 };
 
-export default memo(({ selectedSection, guild }) => {
-  return createElement(AllTabs[selectedSection], { guild });
+export default memo(({ selectedSection, guild, close }) => {
+  return createElement(AllTabs[selectedSection], { guild, close });
 });

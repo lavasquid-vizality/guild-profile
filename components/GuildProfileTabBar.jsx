@@ -1,4 +1,5 @@
 import React, { memo, useState, useEffect } from 'react';
+import { user } from '@vizality/discord';
 import { getModule } from '@vizality/webpack';
 import { toTitleCase } from '@vizality/util/string';
 
@@ -6,11 +7,15 @@ import GuildInfo from './GuildInfo';
 
 import { AllTabs } from '../modules/Sections';
 
+import { Class } from '../constants';
+
 const TabBar = getModule(m => m.displayName === 'TabBar');
 
-const { tabBar, tabBarContainer, tabBarItem } = getModule('topSection');
+const { getChannels } = getModule(m => m.getChannels);
 
 const TABS = (guild) => {
+  const { tabBarItem } = getModule('topSection') ?? Class.topSection;
+
   const Tabs = [];
 
   for (const [ key, value ] of Object.entries(AllTabs)) {
@@ -22,6 +27,8 @@ const TABS = (guild) => {
 };
 
 export default memo(({ guild, section, setSection }) => {
+  const { tabBar, tabBarContainer } = getModule('topSection') ?? Class.topSection;
+
   const [ tabs, setTabs ] = useState(null);
 
   useEffect(() => {
@@ -30,6 +37,6 @@ export default memo(({ guild, section, setSection }) => {
 
   return <div className={tabBarContainer}><TabBar className={tabBar} type={TabBar.Types.TOP} selectedItem={section} onItemSelect={setSection}>
     {tabs}
-    <GuildInfo title={'Current User'} description={{ guild }} />
+    <GuildInfo title={'Current User'} description={{ channelId: getChannels(guild.id).SELECTABLE[0].channel.id, userId: user.getCurrentUser().id }} />
   </TabBar></div>;
 });

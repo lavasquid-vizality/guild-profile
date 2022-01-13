@@ -102,3 +102,67 @@ export const GuildFeatures = Object.freeze({
   LINKED_TO_HUB: OtherIcon.bind(null, 'HubLink'),
   CHANNEL_BANNER: OtherIcon.bind(null, 'ChannelBanner')
 });
+
+export const Class = {
+  topSection: {
+    root: 'root-8LYsGj',
+    tabBarContainer: 'tabBarContainer-sCZC4w',
+    tabBar: 'tabBar-2hXqzU',
+    tabBarItem: 'tabBarItem-30Te4-',
+    body: 'body-1Ukv50',
+    topSection: 'topSection-13QKHs',
+    noTabBar: 'noTabBar-2Q-iE_'
+  },
+  header: {
+    header: 'header-S26rhB',
+    headerTop: 'headerTop-1PNKck',
+    badgeList: 'badgeList-2aoHPw',
+    warningCircleIcon: 'warningCircleIcon-1YXIHu',
+    avatar: 'avatar-3QF_VA',
+    relationshipButtons: 'relationshipButtons-3ByBpj',
+    nameTag: 'nameTag-2Nlmsy',
+    nameTagNoCustomStatus: 'nameTagNoCustomStatus-3ocqoK nameTag-2Nlmsy',
+    nameTagWithCustomStatus: 'nameTagWithCustomStatus-5c-v3- nameTag-2Nlmsy',
+    customStatusActivity: 'customStatusActivity-WKWGD-',
+    customStatus: 'customStatus-kFfkj5',
+    customStatusEmoji: 'customStatusEmoji-3Oq9Rm',
+    customStatusSoloEmoji: 'customStatusSoloEmoji-3m_35_',
+    customStatusText: 'customStatusText-_4TbWr',
+    username: 'username-1g6Iq1',
+    discriminator: 'discriminator-1bqsd3',
+    botTag: 'botTag-2Mlq3u',
+    additionalActionsIcon: 'additionalActionsIcon-3Cy8UU',
+    applicationInstallButton: 'applicationInstallButton-1-58qm',
+    applicationInstallButtonContent: 'applicationInstallButtonContent-2GoIj7',
+    applicationInstallButtonText: 'applicationInstallButtonText-28e06z',
+    launchIcon: 'launchIcon-RTf7He'
+  },
+  infoScroller: {
+    userInfoSection: 'userInfoSection-2u2hir',
+    userInfoSectionHeader: 'userInfoSectionHeader-2mYYun',
+    userBio: 'userBio-2-tr00',
+    note: 'note-3M15gE',
+    connectedAccounts: 'connectedAccounts-1YaT2t',
+    connectedAccount: 'connectedAccount-1xKpli',
+    connectedAccountIcon: 'connectedAccountIcon-2vls0t',
+    connectedAccountNameInner: 'connectedAccountNameInner-t24B11',
+    connectedAccountName: 'connectedAccountName-j0meX4',
+    connectedAccountVerifiedIcon: 'connectedAccountVerifiedIcon-3XCxT8',
+    connectedAccountOpenIcon: 'connectedAccountOpenIcon-1yfBsb',
+    infoScroller: 'infoScroller-1QMpon'
+  },
+  listScroller: {
+    listRow: 'listRow-2nO1T6',
+    listRowContent: 'listRowContent-PEmSWj',
+    listName: 'listName-PwbeHL',
+    listAvatar: 'listAvatar-2bU5Uh',
+    listDiscriminator: 'listDiscriminator-1HAKWY',
+    empty: 'empty-2zcusz',
+    emptyIcon: 'emptyIcon-uKVxYR',
+    emptyText: 'emptyText-mZZyQk',
+    listScroller: 'listScroller-entkMk',
+    emptyIconFriends: 'emptyIconFriends-2LNxTX emptyIcon-uKVxYR',
+    emptyIconGuilds: 'emptyIconGuilds-2NNSTU emptyIcon-uKVxYR',
+    emptyIconStreamerMode: 'emptyIconStreamerMode-3P4I-V emptyIcon-uKVxYR'
+  }
+};

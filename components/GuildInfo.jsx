@@ -1,11 +1,10 @@
 import React, { memo } from 'react';
-import { Constants } from '@vizality/discord/constants';
 import { Messages } from '@vizality/i18n';
+import { Constants } from '@vizality/discord/constants';
 import { getModule } from '@vizality/webpack';
 import { toTitleCase } from '@vizality/util/string';
 
-import MentionPopout from './MentionPopout';
-
+const UserMention = getModule(m => m.displayName === 'UserMention');
 const MaskedLink = getModule(m => m.displayName === 'MaskedLink');
 const Header = getModule(m => m.displayName === 'Header' && m.Sizes);
 const Text = getModule(m => m.displayName === 'Text');
@@ -17,7 +16,7 @@ export default memo(({ title, description, channelId, onClick }) => {
 
   switch (title) {
     case 'Server Owner': {
-      content = <MentionPopout {...description} />;
+      content = <UserMention className={'mention'} {...description} />;
       break;
     }
     case 'Vanity URL': {
@@ -96,7 +95,7 @@ export default memo(({ title, description, channelId, onClick }) => {
       break;
     }
     case 'Current User': {
-      content = <MentionPopout {...description} />;
+      content = <UserMention className={'mention'} {...description} />;
       break;
     }
     default: {
