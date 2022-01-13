@@ -68,7 +68,7 @@ const OtherIcon = (SVG, { ...args }) => {
 
 export const GuildFeatures = Object.freeze({
   INVITE_SPLASH: _Icon.bind(null, m => m.displayName === 'PersonAdd'),
-  VIP_REGIONS: _Icon.bind(null, m => m.displayName === 'Public'),
+  VIP_REGIONS: _Icon.bind(null, m => m.displayName === 'Globe'),
   VANITY_URL: _Icon.bind(null, m => m.displayName === 'Link'),
   MORE_EMOJI: _Icon.bind(null, m => m.displayName === 'EmojiSmile'),
   MORE_STICKERS: _Icon.bind(null, m => m.displayName === 'Sticker' && m.name === 'p'),
