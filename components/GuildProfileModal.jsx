@@ -1,5 +1,4 @@
 import React, { memo, useState, useEffect } from 'react';
-import { Constants } from '@vizality/discord/constants';
 import { Flux, getModule } from '@vizality/webpack';
 const { toHex } = require('@vizality/util/color');
 
@@ -17,7 +16,11 @@ const { AnimatedAvatar, Sizes } = getModule(m => m.AnimatedAvatar);
 const GuildIconWrapper = getModule(m => m.displayName === 'GuildIconWrapper');
 const { Info: GuildInfo, GuildName, Data } = getModule(m => m.Info?.displayName === 'InviteButton.Info');
 
+const Constants = getModule(m => m.API_HOST);
+
 const { count } = getModule('count', 'status');
+const { root, topSection, body } = Class.topSection;
+const { header, avatar, nameTagNoCustomStatus, username: headerUsername } = Class.header;
 const { nameTag, username } = getModule('nameTag', 'username', 'bot');
 
 const FluxMemberCountStoreData = Flux.connectStores([ MemberCountStore ], ({ guildId }) => {
@@ -29,9 +32,6 @@ const FluxMemberCountStoreDiv = Flux.connectStores([ MemberCountStore ], ({ guil
 })(({ color, children }) => children ? <div className={count} style={{ color }}>{children}</div> : null);
 
 export default memo(({ transitionState, onClose, guild }) => {
-  const { root, topSection, body } = getModule('topSection') ?? Class.topSection;
-  const { header, avatar, nameTagNoCustomStatus, username: headerUsername } = getModule('header', 'avatar', 'nameTag') ?? Class.header;
-
   const [ section, setSection ] = useState('SERVER_INFO');
   const [ accentColor, setAccentColor ] = useState('#000000');
 
@@ -51,11 +51,11 @@ export default memo(({ transitionState, onClose, guild }) => {
     getAvatarURL: () => void 0
   };
 
-  return <Modal.ModalRoot className={root} transitionState={transitionState}>
+  return <Modal.ModalRoot className={root} transitionState={transitionState} aria-label={'Guild Profile Modal'}>
     <div className={topSection}>
       <header>
         <UserBanner bannerType={1} user={guildHeader} />
-        <div className={header}>
+        <div className={header} style={{ marginBottom: 28 + 24 * Math.ceil(guild.features.size / 10) }}>
           {guild.icon
             ? <AnimatedAvatar className={avatar} src={guild.getIconURL(120, true)} size={Sizes.SIZE_120} animate={true} />
             : <GuildIconWrapper className={avatar} style={{ backgroundClip: 'unset', borderColor: accentColor }} guild={guild} size={GuildIconWrapper.Sizes.XLARGE} animate={true} />}

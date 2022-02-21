@@ -1,6 +1,5 @@
 import React, { memo } from 'react';
 import { Messages } from '@vizality/i18n';
-import { Constants } from '@vizality/discord/constants';
 import { getModule } from '@vizality/webpack';
 import { toTitleCase } from '@vizality/util/string';
 
@@ -9,7 +8,8 @@ const MaskedLink = getModule(m => m.displayName === 'MaskedLink');
 const Header = getModule(m => m.displayName === 'Header' && m.Sizes);
 const Text = getModule(m => m.displayName === 'Text');
 
-const { parse } = getModule('parse', 'defaultRules');
+const Constants = getModule(m => m.API_HOST);
+const { parse } = getModule(m => m.parse && m.defaultRules);
 
 export default memo(({ title, description, channelId, onClick }) => {
   let content = '';
@@ -35,7 +35,7 @@ export default memo(({ title, description, channelId, onClick }) => {
       title += ` (${Object.values(description).reduce((total, value) => total += value, 0)})`;
 
       content = Object.entries(description).map(([ key, value ]) => {
-        return (value !== 0) ? `${ApplicationCommandType[key]}: ${value}` : null;
+        return value !== 0 ? `${ApplicationCommandType[key]}: ${value}` : null;
       }).filter(commandType => commandType).join('\n');
       break;
     }

@@ -1,5 +1,4 @@
 import React, { memo, createElement, useState } from 'react';
-const { user, constants: { Constants } } = require('@vizality/discord');
 import { getModule } from '@vizality/webpack';
 import { findInReactTree } from '@vizality/util/react';
 
@@ -8,23 +7,25 @@ import GuildInfo from '../components/GuildInfo';
 import { Class } from '../constants';
 
 const { AdvancedScrollerThin } = getModule(m => m.AdvancedScrollerThin);
-const SearchBar = getModule(m => m.displayName === 'SearchBar' && String(m).includes('onChange'));
+const SearchBar = getModule(m => m.displayName === 'SearchBar' && m.toString().includes('onChange'));
 const FriendRow = getModule(m => m.displayName === 'FriendRow');
 const BlockedRow = getModule(m => m.displayName === 'BlockedRow');
 
+const Constants = getModule(m => m.API_HOST);
 const { getChannels } = getModule(m => m.getChannels);
 const Timestamp = getModule(m => m.prototype?.toDate && m.prototype?.month);
 const { extractTimestamp } = getModule(m => m.extractTimestamp);
 const { ExperimentTypes, ExperimentStore } = getModule(m => m.ExperimentTypes);
-const { v3 } = getModule(m => m.v3);
-const { parse } = getModule('parse', 'defaultRules');
+const { parse } = getModule(m => m.parse && m.defaultRules);
 const { getRelationships } = getModule(m => m.getRelationships);
 const { isMember } = getModule(m => m.isMember);
+const { getUser } = getModule(m => m.getUser && m.getUsers);
 const { getStatus } = getModule(m => m.getStatus && m.getState);
 
-const SERVER_INFO = ({ guild, name, close }) => {
-  const { infoScroller } = getModule('infoScroller') ?? Class.infoScroller;
+const { infoScroller } = Class.infoScroller;
+const { listScroller } = Class.listScroller;
 
+const SERVER_INFO = ({ guild, name, close }) => {
   const channelId = getChannels(guild.id).SELECTABLE[0].channel.id;
 
   const Server_Info = [
@@ -61,17 +62,12 @@ const SERVER_INFO = ({ guild, name, close }) => {
 };
 
 const EXPERIMENTS = ({ guild, name }) => {
-  const { infoScroller } = getModule('infoScroller') ?? Class.infoScroller;
-
-  const guildExperiments = ExperimentStore.getGuildExperiments();
   const Experiments = [];
 
   for (const [ key, value ] of Object.entries(ExperimentStore.getRegisteredExperiments())) {
     if (value.type === ExperimentTypes.GUILD) {
-      const guildExperimentsKey = guildExperiments[v3(key)];
-      if (guildExperimentsKey && guild.id in guildExperimentsKey.overrides) {
-        Experiments.push([ `${value.title} (${key})`, value.description[guildExperimentsKey.overrides[guild.id]] ]);
-      }
+      const guildExperimentDescriptor = ExperimentStore.getGuildExperimentDescriptor(key, guild.id);
+      if (guildExperimentDescriptor) Experiments.push([ `${value.title} (${key})`, value.description[value.buckets.lastIndexOf(guildExperimentDescriptor.bucket)] ?? `Bucket ${guildExperimentDescriptor.bucket}: Description not found` ]);
     }
   }
   if (name) return [ `${name} (${Experiments.length})`, Experiments.length ];
@@ -80,8 +76,6 @@ const EXPERIMENTS = ({ guild, name }) => {
 };
 
 const ROLES = ({ guild, name }) => {
-  const { infoScroller } = getModule('infoScroller') ?? Class.infoScroller;
-
   const channelId = getChannels(guild.id).SELECTABLE[0].channel.id;
   let Roles = [];
 
@@ -111,24 +105,20 @@ const RELATIONS = (guild, type, close) => {
 
   for (const [ userId, relation ] of Object.entries(getRelationships())) {
     if (isMember(guild.id, userId)) {
-      if (relation === Constants.RelationshipTypes.FRIEND) Type.Friends.push(<div onClickCapture={rowClick.bind(this, close)}><FriendRow user={user.getUser(userId)} status={getStatus(userId)} activities={[]} isFocused={true} /></div>);
-      else if (relation === Constants.RelationshipTypes.BLOCKED) Type.Blocked.push(<div onClickCapture={rowClick.bind(this, close)}><BlockedRow user={user.getUser(userId)} status={getStatus(userId)} isFocused={true} /></div>);
+      if (relation === Constants.RelationshipTypes.FRIEND) Type.Friends.push(<div onClickCapture={rowClick.bind(this, close)}><FriendRow user={getUser(userId)} status={getStatus(userId)} activities={[]} isFocused={true} /></div>);
+      else if (relation === Constants.RelationshipTypes.BLOCKED) Type.Blocked.push(<div onClickCapture={rowClick.bind(this, close)}><BlockedRow user={getUser(userId)} status={getStatus(userId)} isFocused={true} /></div>);
     }
   }
 
   return Type[type];
 };
 const FRIENDS = ({ guild, name, close }) => {
-  const { listScroller } = getModule('listScroller') ?? Class.listScroller;
-
   const Friends = RELATIONS(guild, 'Friends', close);
   if (name) return [ `${name} (${Friends.length})`, Friends.length ];
 
   return <AdvancedScrollerThin className={listScroller} fade={true}>{Friends}</AdvancedScrollerThin>;
 };
 const BLOCKED = ({ guild, name, close }) => {
-  const { listScroller } = getModule('listScroller') ?? Class.listScroller;
-
   const Blocked = RELATIONS(guild, 'Blocked', close);
   if (name) return [ `${name} (${Blocked.length})`, Blocked.length ];
 
