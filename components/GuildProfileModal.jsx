@@ -17,6 +17,7 @@ const GuildIconWrapper = getModule(m => m.displayName === 'GuildIconWrapper');
 const { Info: GuildInfo, GuildName, Data } = getModule(m => m.Info?.displayName === 'InviteButton.Info');
 
 const Constants = getModule(m => m.API_HOST);
+const { getPrimaryColorForAvatar } = getModule(m => m.getPrimaryColorForAvatar);
 
 const { count } = getModule('count', 'status');
 const { root, topSection, body } = Class.topSection;
@@ -38,7 +39,7 @@ export default memo(({ transitionState, onClose, guild }) => {
   useEffect(() => {
     (async () => {
       if (guild.icon) {
-        const color = `rgb(${await getModule(m => m.getPrimaryColorForAvatar).getPrimaryColorForAvatar(guild.getIconURL(null, true))})`;
+        const color = `rgb(${await getPrimaryColorForAvatar(guild.getIconURL(null, true))})`;
         setAccentColor(parseInt(toHex(color).replace('#', ''), 16));
       }
     })();

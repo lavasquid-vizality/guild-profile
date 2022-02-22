@@ -74,7 +74,7 @@ export const GuildFeatures = Object.freeze({
   MORE_EMOJI: _Icon.bind(null, m => m.displayName === 'EmojiSmile'),
   MORE_STICKERS: _Icon.bind(null, m => m.displayName === 'Sticker' && m.name === 'p'),
   VERIFIED: null, // _Icon.bind(null, m => m.displayName === 'Verified'),
-  COMMERCE: _VZIcon.bind(null, 'Store'),
+  COMMERCE: _VZIcon.bind(null, 'store'),
   DISCOVERABLE: _Icon.bind(null, m => m.displayName === 'Discover'),
   COMMUNITY: _Icon.bind(null, m => m.displayName === 'People'),
   FEATURABLE: _Icon.bind(null, m => m.displayName === 'Star'),
@@ -86,7 +86,7 @@ export const GuildFeatures = Object.freeze({
   ENABLED_DISCOVERABLE_BEFORE: _Icon.bind(null, m => m.displayName === 'Search'),
   WELCOME_SCREEN_ENABLED: _Icon.bind(null, m => m.displayName === 'Monitor'),
   MEMBER_VERIFICATION_GATE_ENABLED: _Icon.bind(null, m => m.displayName === 'Blocked'),
-  PREVIEW_ENABLED: _VZIcon.bind(null, 'ProjectorScreen'),
+  PREVIEW_ENABLED: _VZIcon.bind(null, 'projector-screen'),
   ROLE_SUBSCRIPTIONS_ENABLED: OtherIcon.bind(null, 'RoleSubscriptions'),
   ROLE_SUBSCRIPTIONS_AVAILABLE_FOR_PURCHASE: OtherIcon.bind(null, 'RoleSubscriptions'), // Same as ROLE_SUBSCRIPTIONS_ENABLED
   CREATOR_MONETIZABLE: _Icon.bind(null, m => m.displayName === 'PremiumChannelIcon'),

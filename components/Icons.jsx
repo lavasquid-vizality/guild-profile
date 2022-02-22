@@ -6,6 +6,12 @@ import { toTitleCase } from '@vizality/util/string';
 import { GuildFeatures, Class } from '../constants';
 
 const { Icon } = getModule(m => m.Icon?.displayName === 'Icon');
+const BoostedGuildTier = {
+  1: getModule(m => m.displayName === 'BoostedGuildTier1'),
+  2: getModule(m => m.displayName === 'BoostedGuildTier2'),
+  3: getModule(m => m.displayName === 'BoostedGuildTier3')
+};
+const ApplicationPlaceholder = getModule(m => m.displayName === 'ApplicationPlaceholder');
 
 const Constants = getModule(m => m.API_HOST);
 
@@ -25,7 +31,7 @@ export default memo(({ premiumTier, guildFeatures }) => {
   const Icons = [];
 
   if (debug) guildFeatures = new Set(Object.values(Constants.GuildFeatures));
-  if (premiumTier) Icons.push(<Icon icon={getModule(m => m.displayName === `BoostedGuildTier${premiumTier}`)} tooltip={`Server Boost ${Messages[`PREMIUM_GUILD_TIER_${premiumTier}`]}`} tooltipPosition={'top'} color={'white'} />);
+  if (premiumTier) Icons.push(<Icon icon={BoostedGuildTier[premiumTier]} tooltip={`Server Boost ${Messages[`PREMIUM_GUILD_TIER_${premiumTier}`]}`} tooltipPosition={'top'} color={'white'} />);
 
   for (const guildFeature of guildFeatures) {
     const tooltip = nameReplace[guildFeature] ?? toTitleCase(guildFeature);
@@ -34,7 +40,7 @@ export default memo(({ premiumTier, guildFeatures }) => {
     SortedGuildFeatures[guildFeature] = _Icon
       ? <_Icon tooltip={tooltip} tooltipPosition={'top'} color={'white'} />
       : _Icon === undefined
-        ? <Icon icon={getModule(m => m.displayName === 'ApplicationPlaceholder')} tooltip={tooltip} tooltipPosition={'top'} color={'red'} />
+        ? <Icon icon={ApplicationPlaceholder} tooltip={tooltip} tooltipPosition={'top'} color={'red'} />
         : null;
   }
   Icons.push(Object.values(SortedGuildFeatures).filter(sortedGuildFeature => sortedGuildFeature));
