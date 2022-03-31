@@ -69,7 +69,7 @@ const OtherIcon = (SVG, { ...args }) => {
 
 export const GuildFeatures = Object.freeze({
   INVITE_SPLASH: _Icon.bind(null, m => m.displayName === 'PersonAdd'),
-  VIP_REGIONS: _Icon.bind(null, m => m.displayName === 'Globe'),
+  VIP_REGIONS: _Icon.bind(null, m => m.displayName === 'Public'),
   VANITY_URL: _Icon.bind(null, m => m.displayName === 'Link'),
   MORE_EMOJI: _Icon.bind(null, m => m.displayName === 'EmojiSmile'),
   MORE_STICKERS: _Icon.bind(null, m => m.displayName === 'Sticker' && m.name === 'p'),
@@ -103,7 +103,8 @@ export const GuildFeatures = Object.freeze({
   ANIMATED_BANNER: OtherIcon.bind(null, 'AnimatedBanner'),
   LINKED_TO_HUB: OtherIcon.bind(null, 'HubLink'),
   EXPOSED_TO_ACTIVITIES_WTP_EXPERIMENT: _Icon.bind(null, m => m.displayName === 'Rocket'),
-  EXPOSED_TO_BOOSTING_TIERS_EXPERIMENT: _Icon.bind(null, m => m.displayName === 'GuildBoosterBadge')
+  BOOSTING_TIERS_EXPERIMENT_SMALL_GUILD: _Icon.bind(null, m => m.displayName === 'GuildBoosterBadge'),
+  BOOSTING_TIERS_EXPERIMENT_MEDIUM_GUILD: _Icon.bind(null, m => m.displayName === 'GuildBoosterBadge')
 });
 
 export const Class = {
