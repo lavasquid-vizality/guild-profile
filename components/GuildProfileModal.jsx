@@ -8,7 +8,7 @@ import Section from '../modules/Sections';
 
 import MemberCountStore from '../stores/memberCount';
 
-import { Class } from '../constants';
+import { GuildFeatures, Class } from '../constants';
 
 const Modal = getModule(m => m.ModalRoot);
 const UserBanner = getModule(m => m.displayName === 'UserBanner');
@@ -52,11 +52,19 @@ export default memo(({ transitionState, onClose, guild }) => {
     getAvatarURL: () => void 0
   };
 
+  let iconsCount = guild.features.size;
+  if (guild.premiumTier) iconsCount++;
+  for (const [ key, value ] of Object.entries(GuildFeatures)) {
+    if (value === null) {
+      if (guild.features.has(key)) iconsCount--;
+    }
+  }
+
   return <Modal.ModalRoot className={root} transitionState={transitionState} aria-label={'Guild Profile Modal'}>
     <div className={topSection}>
       <header>
         <UserBanner bannerType={1} user={guildHeader} />
-        <div className={header} style={{ marginBottom: 28 + 24 * Math.ceil(guild.features.size / 10) }}>
+        <div className={header} style={{ marginBottom: 28 + 24 * Math.ceil(iconsCount / 10) }}>
           {guild.icon
             ? <AnimatedAvatar className={avatar} src={guild.getIconURL(120, true)} size={Sizes.SIZE_120} animate={true} />
             : <GuildIconWrapper className={avatar} style={{ backgroundClip: 'unset', borderColor: accentColor }} guild={guild} size={GuildIconWrapper.Sizes.XLARGE} animate={true} />}
