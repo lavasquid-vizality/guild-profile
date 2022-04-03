@@ -37,12 +37,9 @@ export default memo(({ transitionState, onClose, guild }) => {
   const [ accentColor, setAccentColor ] = useState('#000000');
 
   useEffect(() => {
-    (async () => {
-      if (guild.icon) {
-        const color = `rgb(${await getPrimaryColorForAvatar(guild.getIconURL(null, true))})`;
-        setAccentColor(parseInt(toHex(color).replace('#', ''), 16));
-      }
-    })();
+    if (guild.icon) {
+      getPrimaryColorForAvatar(guild.getIconURL(null, true)).then(color => setAccentColor(parseInt(toHex(color).replace('#', ''), 16)));
+    }
   }, [ guild ]);
 
   const guildHeader = {
