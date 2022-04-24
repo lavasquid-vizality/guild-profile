@@ -102,9 +102,7 @@ export const GuildFeatures = Object.freeze({
   HAS_DIRECTORY_ENTRY: _Icon.bind(null, m => m.displayName === 'ChannelDirectory'),
   ANIMATED_BANNER: OtherIcon.bind(null, 'AnimatedBanner'),
   LINKED_TO_HUB: OtherIcon.bind(null, 'HubLink'),
-  EXPOSED_TO_ACTIVITIES_WTP_EXPERIMENT: _Icon.bind(null, m => m.displayName === 'Rocket'),
-  BOOSTING_TIERS_EXPERIMENT_SMALL_GUILD: _Icon.bind(null, m => m.displayName === 'GuildBoosterBadge'),
-  BOOSTING_TIERS_EXPERIMENT_MEDIUM_GUILD: _Icon.bind(null, m => m.displayName === 'GuildBoosterBadge')
+  EXPOSED_TO_ACTIVITIES_WTP_EXPERIMENT: _Icon.bind(null, m => m.displayName === 'Rocket')
 });
 
 export const Class = {
