@@ -3,10 +3,10 @@ import { Messages } from '@vizality/i18n';
 import { getModule } from '@vizality/webpack';
 import { toTitleCase } from '@vizality/util/string';
 
-const UserMention = getModule(m => m.displayName === 'UserMention');
+const UserMention = getModule(m => m.default?.toString().includes('e.inlinePreview') && m.default.displayName !== 'RoleMention').default;
 const MaskedLink = getModule(m => m.displayName === 'MaskedLink');
-const Header = getModule(m => m.displayName === 'Header' && m.Sizes);
-const Text = getModule(m => m.displayName === 'Text');
+const { Heading } = getModule(m => m.Heading?.displayName === 'Heading');
+const { Text } = getModule(m => m.Text?.displayName === 'Text');
 
 const Constants = getModule(m => m.API_HOST);
 const { parse } = getModule(m => m.parse && m.defaultRules);
@@ -105,5 +105,5 @@ export default memo(({ title, description, channelId, onClick }) => {
 
   const style = title === 'Current User' ? { marginLeft: 'auto', marginRight: '20px', textAlign: '-webkit-center' } : { paddingTop: '10px', paddingRight: '20px', paddingBottom: '5px' };
 
-  return <div style={style}><Header size={Header.Sizes.SIZE_12} muted={true} style={{ paddingBottom: '5px', fontVariantLigatures: 'none' }}>{title}</Header><Text style={{ width: 'fit-content', whiteSpace: 'pre-wrap' }} onClick={onClick}>{content}</Text></div>;
+  return <div style={style}><Heading style={{ paddingBottom: '5px' }} variant={'text-sm/semibold'}>{title}</Heading><Text style={{ whiteSpace: 'pre-wrap' }} onClick={onClick} variant={'text-sm/normal'}>{content}</Text></div>;
 });

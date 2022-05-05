@@ -13,7 +13,7 @@ const BlockedRow = getModule(m => m.displayName === 'BlockedRow');
 
 const Constants = getModule(m => m.API_HOST);
 const { getChannels } = getModule(m => m.getChannels);
-const Timestamp = getModule(m => m.prototype?.toDate && m.prototype?.month);
+const Timestamp = getModule(m => m.prototype?.toDate && m.prototype.month);
 const { extractTimestamp } = getModule(m => m.extractTimestamp);
 const { ExperimentTypes, ExperimentStore } = getModule(m => m.ExperimentTypes);
 const { parse } = getModule(m => m.parse && m.defaultRules);
